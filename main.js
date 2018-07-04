@@ -16,7 +16,6 @@ $(document).ready(function(){
             var cardcontent=$('<div class="content"></div>');
             var header=$('<div class="header left"></div>');
             var h3=$('<h3></h3>');
-            /* var showMore=$('<div class="show-more">Show more</div>'); */
             header.html(data.results[i].title);
             h3.append(header);
             cardcontent.append(createP('Release date:','paragraf left'));
@@ -25,7 +24,6 @@ $(document).ready(function(){
             cardcontent.append(createP(data.results[i].characters.length,'paragraf border-bottom right'));
             cardcontent.append(createP('Opening crawl:','paragraf left'));
             cardcontent.append(createP(replaceBr(data.results[i].opening_crawl),'paragraf border-bottom big-text-less right'));
-            /* cardcontent.append(showMore); */
             cardcontent.append(createP('Director:','paragraf left'));
             cardcontent.append(createP(data.results[i].director,'paragraf border-bottom right'));
             cardcontent.append(createP('Producer:','paragraf left'));
@@ -40,31 +38,19 @@ $(document).ready(function(){
             var text=$('.big-text-less');
             var h=text[0].scrollHeight;
             if(tempL.hasClass('big-text-less')){
-                /* $('.big-text-more').addClass('big-text-less').removeClass('big-text-more').animate({'height': '120px'},1000); */
-                tempL.removeClass('big-text-less').addClass('big-text-more').animate({'height': h},1000); 
-                /* $('.show-more').animate({'top': h},1000);  */
+                tempL.removeClass('big-text-less').animate({'height': h},1000).addClass('big-text-more');
                 tempL.removeAttr('title').attr({title: "Show less."});
             }
             else if(tempL.hasClass('big-text-more')){
                 tempL.removeClass('big-text-more');
                 tempL.addClass('big-text-less').animate({'height': '120px'},1000);
-                /* $('.show-more').animate({'top': '283px'},1000); */
                 tempL.removeAttr('title').attr({title: "Show more."});
             }
         });
         $('.card').mouseleave(function(){
             $('.big-text-more').addClass('big-text-less').removeClass('big-text-more').animate({'height': '120px'},1000);
             $('.big-text-less').removeAttr('title').attr({title: "Show more."});
-            /* $('.show-more').css('top','283px').show().slideUp(1000);
-            $('.show-more').removeAttr('background-color'); */
         });
-        /* $('.big-text-less').mouseenter(function() {
-            var temp=$(this);
-            var button=$('.show-more');
-            button.css('top','283px').hide().slideDown(1000);
-            button.css('background-color','#62B000');
-
-          }); */
           $('#switch').click(function(){
             $('#switch').toggleClass("switchOn");
             $('input[type="text"]').animate({width: 'toggle'},1000);
@@ -73,11 +59,6 @@ $(document).ready(function(){
                 $('input[type="text"]').val('');
                 lightsaber.click(turnOn);
             }
-            /* function turnOff(e) {
-                const tempoff = document.createElement('audio');
-                tempoff.src = 'http://soundbible.com/grab.php?id=482&type=wav';//turn off
-                tempoff.play();
-            } */
             function turnOn(e) {
                 const tempon = document.createElement('audio');
                 tempon.src = 'http://soundbible.com/grab.php?id=19&type=wav';//turn on
@@ -140,9 +121,7 @@ $(document).ready(function(){
             $('#search-card').show();
             }
           });
-          
     };
-    
     var createP=function(text, style){
         var temp=$('<p></p>');
         temp.html(text);
@@ -167,5 +146,4 @@ $(document).ready(function(){
         }
         return temp;
     };
-    
 });
