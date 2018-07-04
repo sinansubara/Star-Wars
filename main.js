@@ -38,7 +38,8 @@ $(document).ready(function(){
             var text=$('.big-text-less');
             var h=text[0].scrollHeight;
             if(tempL.hasClass('big-text-less')){
-                tempL.removeClass('big-text-less').animate({'height': h},1000).addClass('big-text-more');
+                tempL.animate({'height': h},1000).removeClass('big-text-less').addClass('big-text-more');
+                //tempL.removeClass('big-text-less').animate({'height': h},1000).addClass('big-text-more');
                 tempL.removeAttr('title').attr({title: "Show less."});
             }
             else if(tempL.hasClass('big-text-more')){
