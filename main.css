@@ -77,6 +77,13 @@ button:hover {
     top:5px;
     width: 500px;
 }
+#searchLoad{
+    position:absolute;
+    z-index:23;
+    display:none;
+    clip: rect(36px,500px,244px,0px);
+    left:30%
+}
 #overlay{
     position:absolute;
     height:100%;
@@ -92,12 +99,13 @@ button:hover {
     display:none;
 }
 #search-card{
-    height: auto;
+    max-height: 440px;
     z-index: 20;
     position:absolute;
-    width:50%;
+    width:30%;
     display:none;
     color:rgb(255,215,0);
+    overflow: auto;
 }
 body{
     background: url(https://i.ytimg.com/vi/sbfJnfEPXNM/maxresdefault.jpg);

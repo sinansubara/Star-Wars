@@ -72,14 +72,31 @@ $(document).ready(function(){
             $.ajax({
                 url: 'https://swapi.co/api/people/',
                 type: 'GET',
+                /* beforeSend: function(){
+                    $('#searchLoad').show();
+                }, */
+                complete: function(){
+                    setTimeout(function(){ 
+                    $('#searchLoad').fadeOut(1000,function(){$('#searchLoad').hide();});
+                    $('#search-card').slideDown(1000);
+                }, waitTime);
+
+                },
                 data: {
                     'search': searchText
                 },
                 success: function(response){
                     $('#overlay').show();
+                    $('#searchLoad').show();
                     createSearchCard(response);
+                    waitTime=response.count*80;
+                    if(waitTime>4000){
+                        waitTime=0;
+                    }else{
+                        waitTime=3500;
+                    }
                     $('body').css('overflow','hidden');
-                    $('body').click(function(){
+                    $('#overlay').click(function(){
                         $('#overlay').hide();
                         $('body').css('overflow','auto');
                         $('#search-card').hide();  //hide searchcard--code
@@ -100,29 +117,64 @@ $(document).ready(function(){
                 }
             });
             function createSearchCard(data){
+            
             var cardcontent=$('<div id="search-content"></div>');
             var header=$('<div class="header left"></div>');
             var h3=$('<h3>SEARCH CARD</h3>');
+            var temp=data;
             h3.html('SEARCH CARD');
             header.append(h3);
             var countsearch=data.count;
+
             if((data.results[0]===undefined)||countsearch==0){
-                cardcontent.append(createP('No results!!!','paragraf border-bottom right'));
-            }    
+                cardcontent.append(header).append(createP('No results!!!','paragraf border-bottom right'));
+            }
             else{
                 if(countsearch>10){
-                    countsearch=10;
+                    imena=[];
+                    ajaxArray(data);
+                    imena.sort();
+                    for(var i=0;i<imena.length;i++){
+                        cardcontent.append(createP(imena[i],'paragraf border-bottom right'));
+                    }
+                    /* countsearch=10; */
                 }
-                for(var i=0;i<countsearch;i++){
-                    cardcontent.append(createP(data.results[i].name,'paragraf border-bottom right'));
+                else{
+                    for(var i=0;i<countsearch;i++){
+                        cardcontent.append(createP(data.results[i].name,'paragraf border-bottom right'));
+                    }
                 }
             }
-            
-            $('#search-card').append(header).append(cardcontent);
-            $('#search-card').show();
+            $('#search-card').append(header).append(cardcontent);/* 
+            $('#search-card').show(); */
             }
           });
     };
+    var imena=[];
+    var waitTime=0;
+    function ajaxArray(data){
+        var test=[];
+        if(data.results==undefined){
+            return;
+        }
+        var nextPage=data.next;
+        $.ajax({
+            url: nextPage,
+            async: false,
+            type: 'GET',
+            success: function(response){
+                for(var i=0;i<data.results.length;i++){
+                    imena.push(data.results[i].name);
+                }
+                nextPage=response.next;
+                ajaxArray(response);
+                
+            },
+            error: function(error){
+                console.log('error', error);
+            }
+        });
+    }
     var createP=function(text, style){
         var temp=$('<p></p>');
         temp.html(text);
