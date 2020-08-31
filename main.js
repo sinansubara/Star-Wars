@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url: 'http://swapi.dev/api/films',
+        url: 'https://swapi.dev/api/films',
         type: 'GET',
         success: function(response){
             createCard(response);
@@ -70,7 +70,7 @@ $(document).ready(function(){
           $('#searchButton').click(function(){
             var searchText=$('[name="search"]').val();
             $.ajax({
-                url: 'http://swapi.dev/api/people/',
+                url: 'https://swapi.dev/api/people/',
                 type: 'GET',
                 /* beforeSend: function(){
                     $('#searchLoad').show();
