@@ -62,7 +62,7 @@ $(document).ready(function(){
             }
             function turnOn(e) {
                 const tempon = document.createElement('audio');
-                tempon.src = 'http://soundbible.com/grab.php?id=19&type=wav';//turn on
+                tempon.src = 'https://soundbible.com/grab.php?id=19&type=wav';//turn on
                 tempon.volume= 0.5;
                 tempon.play();
             }
